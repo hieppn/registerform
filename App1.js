@@ -1,16 +1,16 @@
-import React, {Component, useState} from 'react';
+import React, {useState, setState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
+  ScrollView,
 } from 'react-native';
 const YourApp = () => {
   const [output, setOutput] = useState('0');
   const getOutput = (x) => {
     let data = output;
-    if (data == '0') {
+    if (data === '0') {
       data = '';
       data += x;
     } else {
@@ -23,94 +23,168 @@ const YourApp = () => {
   };
   const cal = () => {
     let data = output;
-    console.log(data);
-    console.log(evil(data));
-    setOutput(evil(data));
+    if (data.length > 0) {
+      if (
+        data.slice(-1) === '/' ||
+        data.slice(-1) === '*' ||
+        data.slice(-1) === '+' ||
+        data.slice(-1) === '-'
+      ) {
+        data = data.slice(0, -1);
+        setOutput(data);
+      } else {
+        setOutput(evil(data));
+      }
+    }
   };
   const clear = () => {
     setOutput(0);
   };
+  const del = () => {
+    let data = output;
+    if (data.length > 0) {
+      data = data.slice(0, -1);
+    }
+    if (data.length === 0) {
+      data = 0;
+    }
+    setOutput(data);
+  };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.containerResult}>
         <Text style={styles.textResult}>{output}</Text>
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity style={styles.clearButton} onPress={() => clear()}>
-          <Text style={styles.textButtonClear}>Clear</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.divideButton}
-          onPress={() => getOutput('/')}>
-          <Text style={styles.textButton}>/</Text>
-        </TouchableOpacity>
+      <View style={styles.row}>
+        {/* {renderCell('1')} */}
+        <Cell
+          value={'Clear'}
+          onPress={clear}
+          styles={styles.clearButton}
+          styleText={styles.textButtonClear}
+        />
+        <Cell
+          value={'/'}
+          onPress={getOutput}
+          styles={styles.divideButton}
+          styleText={styles.textButton}
+        />
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('7')}>
-          <Text style={styles.textNumberButton}>7</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('8')}>
-          <Text style={styles.textNumberButton}>8</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.numberButton}
-          // eslint-disable-next-line prettier/prettier
-          onPress={() => getOutput('9')}>
-          <Text style={styles.textNumberButton}>9</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.divideButton}
-          onPress={() => getOutput('-')}>
-          <Text style={styles.textButton}>-</Text>
-        </TouchableOpacity>
+      <View style={styles.row}>
+        <Cell
+          value={'7'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'8'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'9'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'-'}
+          onPress={getOutput}
+          styles={styles.divideButton}
+          styleText={styles.textButton}
+        />
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('4')}>
-          <Text style={styles.textNumberButton}>4</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('5')}>
-          <Text style={styles.textNumberButton}>5</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('6')}>
-          <Text style={styles.textNumberButton}>6</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.divideButton}
-          onPress={() => getOutput('+')}>
-          <Text style={styles.textButton}>+</Text>
-        </TouchableOpacity>
+      <View style={styles.row}>
+        <Cell
+          value={'4'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'5'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'6'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'+'}
+          onPress={getOutput}
+          styles={styles.divideButton}
+          styleText={styles.textButton}
+        />
       </View>
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('1')}>
-          <Text style={styles.textNumberButton}>1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('2')}>
-          <Text style={styles.textNumberButton}>2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.numberButton}
-          onPress={() => getOutput('3')}>
-          <Text style={styles.textNumberButton}>3</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.divideButton} onPress={() => cal()}>
-          <Text style={styles.textButton}>=</Text>
-        </TouchableOpacity>
+      <View style={styles.row}>
+        <Cell
+          value={'1'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'2'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'3'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'*'}
+          onPress={getOutput}
+          styles={styles.divideButton}
+          styleText={styles.textButton}
+        />
       </View>
-    </View>
+      <View style={styles.row}>
+        <Cell
+          value={'0'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'.'}
+          onPress={getOutput}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'D'}
+          onPress={del}
+          styles={styles.numberButton}
+          styleText={styles.textNumberButton}
+        />
+        <Cell
+          value={'='}
+          onPress={cal}
+          styles={styles.divideButton}
+          styleText={styles.textButton}
+        />
+      </View>
+    </ScrollView>
+  );
+};
+const Cell = ({value, onPress, styles, styleText}) => {
+  const getData = () => {
+    onPress && onPress(value);
+  };
+  return (
+    <TouchableOpacity onPress={getData} style={[{}, styles]}>
+      <Text style={[{}, styleText]}>{value}</Text>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
@@ -118,7 +192,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#433333',
   },
   textResult: {
-    height: 250,
     textAlign: 'right',
     fontSize: 100,
     textAlignVertical: 'center',
@@ -126,47 +199,43 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontWeight: 'bold',
   },
+  row: {flexDirection: 'row', height: 'auto'},
   container: {
     flex: 1,
   },
   clearButton: {
     width: '75%',
-    height: 130,
     backgroundColor: 'white',
     borderColor: '#920F29',
   },
   divideButton: {
     width: '25%',
-    height: 130,
     backgroundColor: '#F2274F',
     borderColor: '#920F29',
     borderWidth: 1,
   },
   numberButton: {
     width: '25%',
-    height: 130,
     backgroundColor: 'white',
     borderColor: '#920F29',
     borderWidth: 1,
   },
   textButtonClear: {
     color: 'black',
-    fontSize: 100,
     textAlignVertical: 'center',
     textAlign: 'center',
     borderColor: '#920F29',
     borderWidth: 1,
-    fontWeight: 'bold',
+    fontSize: 70,
   },
   textButton: {
-    fontSize: 100,
+    fontSize: 70,
     textAlignVertical: 'center',
     color: 'white',
     textAlign: 'center',
-    fontWeight: 'bold',
   },
   textNumberButton: {
-    fontSize: 100,
+    fontSize: 70,
     textAlignVertical: 'center',
     color: 'black',
     textAlign: 'center',

@@ -47,8 +47,8 @@ const App = () => {
       </View>
       <Text style={styles.policy}>
         Bằng việc xác nhận tạo tài khoản, bạn đã đồng ý với{' '}
-        <Text style={{color: '#25969E'}}>điều khoản quy định</Text> của chúng
-        tôi
+        <Text style={styles.policyHighLight}>điều khoản quy định</Text> của
+        chúng tôi
       </Text>
     </ScrollView>
   );
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#505050',
-    fontSize: 25,
+    fontSize: 28,
     marginLeft: '32%',
   },
   layoutInput: {
@@ -114,7 +114,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     color: 'gray',
     textAlign: 'center',
+    fontSize: 16,
   },
+  policyHighLight: {color: '#25969E', fontSize: 16},
   showPassword: {
     position: 'absolute',
     right: 10,
@@ -143,8 +145,7 @@ const PassWordInput = (props) => {
         onPress={() => {
           setShowPass(!isShowPass);
         }}>
-        {/* <Image source={(isShowPass) ? {props.imageClose} : {props.imageOpen}} /> */}
-        <Image source={props.imageClose} />
+        <Image source={isShowPass ? props.imageClose : props.imageOpen} />
       </TouchableOpacity>
     </View>
   );
