@@ -1,9 +1,3 @@
-/**
- * @format
- */
-
-import {AppRegistry} from 'react-native';
-import App from './App2';
-import {name as appName} from './app.json';
-
-AppRegistry.registerComponent(appName, () => App);
+import { Navigation } from 'react-native-navigation';
+import App from './App';
+Navigation.registerComponent('com.myApp.WelcomeScreen', () => App);

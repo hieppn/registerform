@@ -1,11 +1,6 @@
-import React, {useState, setState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+/* eslint-disable no-new-func */
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 const YourApp = () => {
   const [output, setOutput] = useState('0');
   const getOutput = (x) => {
@@ -51,9 +46,18 @@ const YourApp = () => {
     setOutput(data);
   };
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.containerResult}>
-        <Text style={styles.textResult}>{output}</Text>
+    <View style={styles.container}>
+      <View style={styles.containerResult} horizontal>
+        <Text
+          style={[
+            styles.textResult,
+            output.length > 7 && styles.textResultMedium,
+            output.length > 14 && styles.textResultSmall,
+            output.length > 28 && styles.textResultTidy,
+          ]}
+        >
+          {output}
+        </Text>
       </View>
       <View style={styles.row}>
         {/* {renderCell('1')} */}
@@ -174,10 +178,10 @@ const YourApp = () => {
           styleText={styles.textButton}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 };
-const Cell = ({value, onPress, styles, styleText}) => {
+const Cell = ({ value, onPress, styles, styleText }) => {
   const getData = () => {
     onPress && onPress(value);
   };
@@ -190,16 +194,45 @@ const Cell = ({value, onPress, styles, styleText}) => {
 const styles = StyleSheet.create({
   containerResult: {
     backgroundColor: '#433333',
+    height: 250,
   },
   textResult: {
     textAlign: 'right',
     fontSize: 100,
     textAlignVertical: 'center',
     color: 'white',
-    marginHorizontal: 10,
     fontWeight: 'bold',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
-  row: {flexDirection: 'row', height: 'auto'},
+  textResultMedium: {
+    textAlign: 'right',
+    fontSize: 90,
+    textAlignVertical: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  textResultSmall: {
+    textAlign: 'right',
+    fontSize: 70,
+    textAlignVertical: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  textResultTidy: {
+    textAlign: 'right',
+    fontSize: 40,
+    textAlignVertical: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  row: { flexDirection: 'row', height: 'auto' },
   container: {
     flex: 1,
   },

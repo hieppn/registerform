@@ -1,152 +1,139 @@
-/* eslint-disable no-unused-vars */
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import { Navigation } from 'react-native-navigation';
+import TodoList from './TodoList';
+import Calculator from './Calculator';
+import RegisterForm from './RegisterForm';
+import useEffect from './useEffect/useEffect';
 
-import closeImg from './image/cancel.png';
-import visibility from './image/visibility.png';
-import witness from './image/witness.png';
-
-const App = () => {
-  const [isShow, setShow] = useState(true);
-  const [isShowPass, setShowPass] = useState(true);
+// Home screen declaration
+const HomeScreen = (props) => {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.layoutTitle}>
-        <Image style={styles.closeImage} source={closeImg} />
-        <Text style={styles.title}>Đăng ký</Text>
+    <View style={styles.root}>
+      <View style={styles.button}>
+        <Button
+          title="Push ToDoList Screen"
+          color="#33a5c6"
+          onPress={() =>
+            Navigation.push(props.componentId, {
+              component: {
+                name: 'ToDoList',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'ToDoList',
+                    },
+                  },
+                },
+              },
+            })
+          }
+        />
       </View>
-      <ItemInput title="Tên người dùng*" />
-      <ItemInput title="Email*" />
-      <ItemInput title="Số điện thoại*" />
-      <ItemInput title="Tên tài khoản*" />
-      <PassWordInput
-        title="Mật khẩu*"
-        imageClose={visibility}
-        imageOpen={witness}
-      />
-      <PassWordInput
-        title="Xác nhận mật khẩu*"
-        imageClose={visibility}
-        imageOpen={witness}
-      />
-      <View style={styles.layoutButton}>
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.textLogin}>Đăng nhập</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.signUpButton}>
-          <Text style={styles.textSignUp}>Đăng ký</Text>
-        </TouchableOpacity>
+      <View style={styles.button}>
+        <Button
+          title="Push UseEffect Screen"
+          color="pink"
+          onPress={() =>
+            Navigation.push(props.componentId, {
+              component: {
+                name: 'useEffect',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'useEffect',
+                    },
+                  },
+                },
+              },
+            })
+          }
+        />
       </View>
-      <Text style={styles.policy}>
-        Bằng việc xác nhận tạo tài khoản, bạn đã đồng ý với{' '}
-        <Text style={styles.policyHighLight}>điều khoản quy định</Text> của
-        chúng tôi
-      </Text>
-    </ScrollView>
+      <View style={styles.button}>
+        <Button
+          title="Push Calculator Screen"
+          color="blue"
+          onPress={() =>
+            Navigation.push(props.componentId, {
+              component: {
+                name: 'Calculator',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'Calculator',
+                    },
+                  },
+                },
+              },
+            })
+          }
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          style={styles.button}
+          title="Push Register Screen"
+          color="#eb726b"
+          onPress={() =>
+            Navigation.push(props.componentId, {
+              component: {
+                name: 'RegisterForm',
+                options: {
+                  topBar: {
+                    title: {
+                      text: 'RegisterForm',
+                    },
+                  },
+                },
+              },
+            })
+          }
+        />
+      </View>
+    </View>
   );
 };
+HomeScreen.options = {
+  topBar: {
+    title: {
+      text: 'Home',
+      color: 'white',
+    },
+    background: {
+      color: 'lightyellow',
+    },
+  },
+};
+
+Navigation.registerComponent('Home', () => HomeScreen);
+Navigation.registerComponent('ToDoList', () => TodoList);
+Navigation.registerComponent('Calculator', () => Calculator);
+Navigation.registerComponent('RegisterForm', () => RegisterForm);
+Navigation.registerComponent('useEffect', () => useEffect);
+Navigation.events().registerAppLaunchedListener(async () => {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [
+          {
+            component: {
+              name: 'Home',
+            },
+          },
+        ],
+      },
+    },
+  });
+});
+
 const styles = StyleSheet.create({
-  container: {
+  root: {
+    flex: 1,
     backgroundColor: 'white',
-    flex: 1,
-    padding: 20,
+    padding: 30,
   },
-  layoutTitle: {
-    flex: 0.7,
-    flexDirection: 'row',
-  },
-  closeImage: {
-    height: 20,
-    width: 20,
-    marginTop: 7,
-  },
-  title: {
-    color: '#505050',
-    fontSize: 28,
-    marginLeft: '32%',
-  },
-  layoutInput: {
-    flex: 1,
-    // marginTop:15
-  },
-  titleInput: {
-    color: 'gray',
-    fontSize: 15,
-    marginBottom: 5,
-  },
-  textInput: {
-    height: 45,
-    borderColor: '#dddddd',
-    borderWidth: 1,
-  },
-  layoutButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 20,
-    paddingHorizontal: 20,
-  },
-  loginButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderColor: '#41B8C1',
-    borderWidth: 2,
-  },
-  signUpButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-    backgroundColor: '#41B8C1',
-    borderColor: '#41B8C1',
-    borderWidth: 2,
-  },
-  textSignUp: {
-    color: 'white',
-  },
-  policy: {
-    marginTop: 20,
-    paddingHorizontal: 10,
-    color: 'gray',
-    textAlign: 'center',
-    fontSize: 16,
-  },
-  policyHighLight: {color: '#25969E', fontSize: 16},
-  showPassword: {
-    position: 'absolute',
-    right: 10,
-    top: 38,
+  button: {
+    marginBottom: 50,
   },
 });
-export default App;
-
-const ItemInput = (props) => {
-  return (
-    <View style={styles.layoutInput}>
-      <Text style={styles.titleInput}>{props.title}</Text>
-      <TextInput style={styles.textInput} />
-    </View>
-  );
-};
-
-const PassWordInput = (props) => {
-  const [isShowPass, setShowPass] = useState(true);
-  return (
-    <View style={styles.layoutInput}>
-      <Text style={styles.titleInput}>{props.title}</Text>
-      <TextInput secureTextEntry={isShowPass} style={styles.textInput} />
-      <TouchableOpacity
-        style={styles.showPassword}
-        onPress={() => {
-          setShowPass(!isShowPass);
-        }}>
-        <Image source={isShowPass ? props.imageClose : props.imageOpen} />
-      </TouchableOpacity>
-    </View>
-  );
-};
