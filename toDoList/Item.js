@@ -12,7 +12,7 @@ export default function Item(props) {
             source={data.isChecked ? require('../image/tick.png') : require('../image/notick.png')}
           />
         </TouchableOpacity>
-        <Text style={style.title}>{data.title}</Text>
+        <Text style={[style.title, data.isChecked && style.titleChecked]}>{data.title}</Text>
       </View>
       <TouchableOpacity onPress={props.remove}>
         <Image style={style.delete} source={require('../image/delete.png')} />
@@ -43,6 +43,11 @@ const style = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    color: 'black',
+  },
+  titleChecked: {
+    color: 'gray',
+    textDecorationLine: 'line-through',
   },
   delete: {
     height: 25,

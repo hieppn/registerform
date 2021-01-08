@@ -9,7 +9,7 @@ import witness from './image/witness.png';
 import ItemInput from './InputItem';
 import PassWordInput from './PasswordInput';
 
-const App = () => {
+const LoginForm = () => {
   const [] = useState(true);
   const [] = useState(true);
   const [name, setName] = useState('');
@@ -145,4 +145,4 @@ const styles = StyleSheet.create({
     top: 38,
   },
 });
-export default App;
+export default LoginForm;
